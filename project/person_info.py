@@ -7,20 +7,20 @@ from jax.example_libraries.stax import serial
 from file_manager import *
 from validator import *
 
-person_list = read_from_file("persons.dat")
+license_list = read_from_file("license.dat")
 
 
-def load_data(person_list):
-    person_list = read_from_file("persons.dat")
+def load_data(license_list):
+    license_list = read_from_file("license.dat")
     for row in table.get_children():
         table.delete(row)
 
-    for person in person_list:
+    for person in license_list:
         table.insert("", END, values=person)
 
 
 def reset_form():
-    id.set(len(person_list) + 1)
+    id.set(len(license_list) + 1)
     name.set("")
     family.set("")
     serial.set("")
@@ -28,18 +28,18 @@ def reset_form():
     expired_date.set("")
     city.set("")
 
-    load_data(person_list)
+    load_data(license_list)
 
 
-def save_btn_click(expired_date=None):
+def save_btn_click():
     person = (id.get(), name.get(), family.get(), serial.get(),city.get(),sader_date.get(),expired_date.get())
-    errors = person_validator(person)
+    errors = license_validator(license)
     if errors:
         msg.showerror("Errors", "\n".join(errors))
     else:
-        msg.showinfo("Saved", "Person saved")
-        person_list.append(person)
-        write_to_file("persons.dat", person_list)
+        msg.showinfo("Saved", "license saved")
+        license_list.append(license)
+        write_to_file("license.dat", license_list)
         reset_form()
 
 
@@ -65,7 +65,7 @@ def remove_btn_click():
 
 window = Tk()
 window.title("license Info")
-window.geometry("1500x500")
+window.geometry("1200x370")
 
 # Id
 Label(window, text="Id").place(x=20, y=20)
@@ -91,11 +91,11 @@ Label(window, text="sader_date").place(x=20, y=180)
 sader_date = IntVar()
 Entry(window, textvariable=sader_date).place(x=100, y=180)
 
-Label(window, text="expired_date").place(x=20, y=180)
+Label(window, text="expired_date").place(x=20, y=220)
 expired_date = IntVar()
 Entry(window, textvariable=expired_date).place(x=100, y=220)
 
-Label(window, text="city").place(x=20, y=220)
+Label(window, text="city").place(x=20, y=260)
 city = StringVar()
 Entry(window, textvariable=city).place(x=100, y=260)
 
